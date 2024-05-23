@@ -10,7 +10,7 @@ const InputError = require('../exceptions/InputError');
 (async () => {
    const server = Hapi.server({
       port: 3000,
-      host: 'localhost',
+      host: '0.0.0.0',
       routes: {
          cors: {
             origin: ['*']
@@ -21,7 +21,7 @@ const InputError = require('../exceptions/InputError');
 
    server.ext('onPreResponse', (req, h) => {
       const response = req.response;
-      
+      console.log(response)
       if(response instanceof InputError) {
          const newResponse = h.response({
             status: 'fail',
@@ -35,9 +35,9 @@ const InputError = require('../exceptions/InputError');
             status: 'fail',
             message: response.message
          })
-         newResponse.code(response.statusCode);
+         newResponse.code(response.output.statusCode);
          return newResponse;
-      }
+      }  
       return h.continue;
    })
 
