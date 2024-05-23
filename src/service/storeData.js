@@ -1,10 +1,12 @@
-const { FIREBASE_DB } = require('../FirebaseConfig')
-const { collection, doc, addDoc } = require('firebase/firestore')
+const { Firestore } = require('@google-cloud/firestore');
 
-const storeData = (id, data) => {
-   const db = new Firestore();
- 
-   const predictCollection = db.collection(FIREBASE_DB, 'prediction');
+async function storeData(id, data) {
+   const db = new Firestore({
+      databaseId: '(default)',
+      projectId: 'submissionmlgc-dimas'
+   });
+   
+   const predictCollection = db.collection('predictions');
    return predictCollection.doc(id).set(data);
 }
 
