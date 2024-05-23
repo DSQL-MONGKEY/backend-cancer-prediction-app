@@ -1,4 +1,4 @@
-const postPredictionHandler = require('../server/handler');
+const { postPredictionHandler, getHistoryHandler } = require('../server/handler');
 
 const routes = [
    {
@@ -7,11 +7,16 @@ const routes = [
       handler: postPredictionHandler,
       options: {
          payload: {
-         /*Mengizinkan data berupa gambar*/
-         allow: 'multipart/form-data',
-         multipart: true
+            allow: 'multipart/form-data',
+            multipart: true,
+            maxBytes: 1000000
          }
       }
+   },
+   {
+      path: '/predict/histories',
+      method: 'GET',
+      handler: getHistoryHandler
    }
 ]
 
